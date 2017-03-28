@@ -6,11 +6,13 @@ package com.oliver.main.Food;
 public class Food {
 
     private FoodID foodID;
-    private int heal;
+    private int healthHeal;
+    private int energyHeal;
 
-    public Food(FoodID foodID, int heal) {
+    public Food(FoodID foodID, int healthHeal, int energyHeal) {
         this.foodID = foodID;
-        this.heal = heal;
+        this.healthHeal = healthHeal;
+        this.energyHeal = energyHeal;
     }
 
     public FoodID getFoodID() {
@@ -21,11 +23,19 @@ public class Food {
         this.foodID = foodID;
     }
 
-    public int getHeal() {
-        return heal;
+    public int getHealthHeal() {
+        return healthHeal;
     }
 
-    public void setHeal(int heal) {
-        this.heal = heal;
+    public void setHealthHeal(int healthHeal) {
+        this.healthHeal = healthHeal;
+    }
+
+    public int getEnergyHeal() {
+        return energyHeal;
+    }
+
+    public void setEnergyHeal(int energyHeal) {
+        this.energyHeal = energyHeal;
     }
 }

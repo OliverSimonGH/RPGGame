@@ -25,11 +25,12 @@ public class Game {
         Scanner scan = new Scanner(System.in);
         Game game = new Game();
         game.spawnObjects();
-        Player playerOne = new Player("Oliver", null, PersonID.PLAYER, 100, 0, 20);
+        Player playerOne = new Player("Oliver", null, PersonID.PLAYER, 100, 0, 20, 30);
 
-        while(!playerOne.isAlive()){
+        while(playerOne.isAlive()){
             playerOne.checkRoomPlayerIsIn(game.getRooms());
             playerOne.movePlayer(game.getRooms());
+
         }
     }
 
@@ -43,16 +44,15 @@ public class Game {
         enemy.add(new Enemy("Kaio-Sama", PersonID.ENEMY, 40, 10, 15));
         enemy.add(new Enemy("Broly", PersonID.ENEMY, 50, 0, 18));
         enemy.add(new Enemy("Trunks", PersonID.ENEMY, 45, 0, 14));
-        weapons.add(new Weapon(WeaponID.BAT, 0, 3));
-        weapons.add(new Weapon(WeaponID.GUN, 0, 10));
-        weapons.add(new Weapon(WeaponID.KNIFE, 0, 5));
-        weapons.add(new Weapon(WeaponID.SWORD, 2, 7));
-        weapons.add(new Weapon(WeaponID.NONE, 0, 0));
-        food.add(new Food(FoodID.Potato, 5));
-        food.add(new Food(FoodID.Fish, 8));
-        food.add(new Food(FoodID.Chicken, 11));
-        food.add(new Food(FoodID.Lobster, 15));
-        food.add(new Food(FoodID.Pizza, 20));
+        weapons.add(new Weapon(WeaponID.Bat, 0, 3));
+        weapons.add(new Weapon(WeaponID.Gun, 0, 10));
+        weapons.add(new Weapon(WeaponID.Knife, 0, 5));
+        weapons.add(new Weapon(WeaponID.Sword, 2, 7));
+        food.add(new Food(FoodID.Potato, 10, 2));
+        food.add(new Food(FoodID.Fish, 15, 3));
+        food.add(new Food(FoodID.Chicken, 20, 4));
+        food.add(new Food(FoodID.Lobster, 25, 5));
+        food.add(new Food(FoodID.Pizza, 30, 6));
         rooms.add(new Rooms("Kitchen", 1, 0, selectRandomFood(), selectRandomEnemy(), selectRandomWeapon()));
         rooms.add(new Rooms("Bathroom", 0, 1, selectRandomFood(), selectRandomEnemy(), selectRandomWeapon()));
         rooms.add(new Rooms("Bedroom", 1, 1, selectRandomFood(), selectRandomEnemy(), selectRandomWeapon()));
@@ -80,7 +80,7 @@ public class Game {
 
     private Enemy selectRandomEnemy() {
         int randomChance = new Random().nextInt(100) + 1;
-        if (randomChance > 65) {
+        if (randomChance > 60) {
             int randEnemy = new Random().nextInt(enemy.size());
             return enemy.get(randEnemy);
         }

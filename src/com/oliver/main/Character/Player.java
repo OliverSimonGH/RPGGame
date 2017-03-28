@@ -10,6 +10,7 @@ import java.util.Vector;
 public class Player extends Person {
 
     private Weapon weapon;
+    private int energyPoints;
     private int x;
     private int y;
     private boolean north = false;
@@ -20,11 +21,12 @@ public class Player extends Person {
     private String eastRoom;
     private String southRoom;
     private String westRoom;
-    private Scanner scan = new Scanner(System.in);
+    private Object[] inventory;
 
-    public Player(String name, Weapon weapon, PersonID personId, int healthPoints, int minimumDamage, int maximumDamage) {
+    public Player(String name, Weapon weapon, PersonID personId, int healthPoints, int minimumDamage, int maximumDamage, int energyPoints) {
         super(name, personId, healthPoints, minimumDamage, maximumDamage);
         this.weapon = weapon;
+        this.energyPoints = energyPoints;
         this. x = 0;
         this.y = 0;
     }
@@ -34,10 +36,13 @@ public class Player extends Person {
         //generate a hit between the minimum and maximum damage;
         int playerHit = new Random().nextInt(getMaximumDamage() - getMinimumDamage() + 1) + getMinimumDamage();
         //get damage from weapon and generate a number hit from the player and weapon damage combined
-        int weaponHit = new Random().nextInt(weapon.getMaxWeaponDamage() - weapon.getMinWeaponDamage() + 1) + weapon.getMinWeaponDamage();
 
-        return (playerHit + weaponHit);
-        //chance to hit nothing;
+        if (getWeapon() == null){
+            return playerHit;
+        } else {
+            int weaponHit = new Random().nextInt(weapon.getMaxWeaponDamage() - weapon.getMinWeaponDamage() + 1) + weapon.getMinWeaponDamage();
+            return (playerHit + weaponHit);
+        }
     }
 
     public void attackPerson(Person enemy) {
@@ -63,38 +68,43 @@ public class Player extends Person {
             if (northPossible) {
                 north = true;
                 northRoom = room.getName();
-                System.out.println("Press: W to go to " + northRoom);
+                System.out.println("Press: W to go to " + northRoom + " (North)");
             }
             if (southPossible) {
                 south = true;
                 southRoom = room.getName();
-                System.out.println("Press: S to go to " + southRoom);
+                System.out.println("Press: S to go to " + southRoom + " (South)");
             }
             if (eastPossible) {
                 east = true;
                 eastRoom = room.getName();
-                System.out.println("Press: D to go to " + eastRoom);
+                System.out.println("Press: D to go to " + eastRoom + " (East)");
             }
             if (westPossible) {
                 west = true;
                 westRoom = room.getName();
-                System.out.println("Press: A to go to " + westRoom);
+                System.out.println("Press: A to go to " + westRoom + " (West)");
             }
         }
 
+        Scanner scan = new Scanner(System.in);
         String direction = scan.nextLine();
 
         if (direction.equalsIgnoreCase("w") && north) {
             System.out.println("You have moved to the " + northRoom + "\n");
+            energyPoints--;
             y++;
         } else if (direction.equalsIgnoreCase("s") && south) {
             System.out.println("You have moved to the " + southRoom + "\n");
+            energyPoints--;
             y--;
         } else if (direction.equalsIgnoreCase("d") && east) {
             System.out.println("You have moved to the " + eastRoom + "\n");
+            energyPoints--;
             x++;
         } else if (direction.equalsIgnoreCase("a") && west) {
             System.out.println("You have moved to the " + westRoom + "\n");
+            energyPoints--;
             x--;
         } else {System.out.println("Please select a valid direction\n"); movePlayer(r);}
 
@@ -112,10 +122,14 @@ public class Player extends Person {
                 Scanner scan = new Scanner(System.in);
                 String userInput = scan.nextLine();
 
-                if (userInput.equalsIgnoreCase("a") && room.getEnemy() != null){
+                if (userInput.equalsIgnoreCase("q")){
+                    getStatistics(room);
+                } else if (userInput.equalsIgnoreCase("a") && room.getEnemy() != null){
                     fightWithOptions(room);
                 } else if (userInput.equalsIgnoreCase("e") && room.getFood() != null){
                     eatFood(room);
+                } else if (userInput.equalsIgnoreCase("w") && room.getWeapon() != null){
+                    pickUpWeapon(room);
                 } else if (userInput.equalsIgnoreCase("c")){
                     System.out.println();
                     return;
@@ -123,6 +137,24 @@ public class Player extends Person {
             }
         }
         checkRoomPlayerIsIn(r);
+    }
+
+    private void getStatistics(Rooms room){
+        System.out.println("Health: " + getCurrentHealthPoints());
+        System.out.println("Energy: " + getEnergyPoints());
+        System.out.println("Max hit: " + getMaximumDamage());
+        if (getWeapon() != null){
+            System.out.println("Weapon: " + getWeapon().getWeaponID() + "(" + getWeapon().getMinWeaponDamage() + "-" + getWeapon().getMaxWeaponDamage() + ")");
+            System.out.println("Max Hit With Weapon: " + (getMaximumDamage() + getWeapon().getMaxWeaponDamage()));
+        }
+        System.out.println("Location (X/Y): " + getX() + ", " + getY());
+        System.out.println("Current Room: " + room.getName() + "\n");
+    }
+
+    private void pickUpWeapon(Rooms room) {
+        setWeapon(room.getWeapon());
+        System.out.println("You have equipped the " + room.getWeapon().getWeaponID() + "\n");
+        room.setWeapon(null);
     }
 
     private void fightWithOptions(Rooms room) {
@@ -134,6 +166,7 @@ public class Player extends Person {
                 System.out.println("\nPress A to attack the enemy");
                 System.out.println("Press R to run away from the enemy, you coward!");
 
+                Scanner scan = new Scanner(System.in);
                 String option = scan.nextLine();
 
                 if (option.equalsIgnoreCase("a")){
@@ -151,8 +184,10 @@ public class Player extends Person {
 
     private void eatFood(Rooms room){
         int health = getCurrentHealthPoints();
-        setCurrentHealthPoints(health += room.getFood().getHeal());
-        System.out.println("You have eaten the " + room.getFood().getFoodID() + ", your health is: " + getCurrentHealthPoints() + "\n");
+        int energy = getEnergyPoints();
+        setCurrentHealthPoints(health += room.getFood().getHealthHeal());
+        setEnergyPoints(energy += room.getFood().getEnergyHeal());
+        System.out.println("You have eaten the " + room.getFood().getFoodID() + ", Health: " + getCurrentHealthPoints() +  ", Energy: " + getEnergyPoints() + "\n");
         room.setFood(null);
     }
 
@@ -178,5 +213,14 @@ public class Player extends Person {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public int getEnergyPoints() {
+        if (energyPoints < 0) energyPoints = 0;
+        return energyPoints;
+    }
+
+    public void setEnergyPoints(int energyPoints) {
+        this.energyPoints = energyPoints;
     }
 }

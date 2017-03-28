@@ -1,7 +1,6 @@
 package com.oliver.main.Map;
 
 import com.oliver.main.Character.Enemy;
-import com.oliver.main.Character.Player;
 import com.oliver.main.Food.Food;
 import com.oliver.main.Weapons.Weapon;
 
@@ -25,13 +24,17 @@ public class Rooms {
     }
 
     public void getDescription() {
-        if (enemy.isAlive()){
+        System.out.println("Press Q to get your players statistics");
+        if (enemy != null){
             System.out.println("There is an enemy within the room, it's a " + enemy.getName() + ". Press A to fight with the enemy");
+        }
+        if (weapon != null){
+            System.out.println("You have found a " + weapon.getWeaponID() + "(" + weapon.getMaxWeaponDamage()+ "DMG) in the room, Press W to pick it up");
         }
         if (food != null){
             System.out.println("You have found a " + food.getFoodID()+ " in the room, press E to eat the food");
         }
-        if (!enemy.isAlive() && food == null){
+        if (enemy == null && food == null && weapon == null){
             System.out.println("This room is empty, your adventure must carry on");
         }
         System.out.println("Press C to escape the room.");
