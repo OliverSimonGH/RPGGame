@@ -1,6 +1,5 @@
-package com.oliver.main.Character.Player;
+package com.oliver.main.Character.Players;
 
-import com.oliver.main.Character.Npc.Npc;
 import com.oliver.main.Items.Armour.Armour;
 import com.oliver.main.Items.Armour.ArmourID;
 import com.oliver.main.Items.Weapons.Weapon;

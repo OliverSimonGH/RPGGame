@@ -1,9 +1,7 @@
-package com.oliver.main.Character.Player;
+package com.oliver.main.Character.Players;
 
-import com.oliver.main.Items.Item;
 import com.oliver.main.Items.Tradeable.Tradeable;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**

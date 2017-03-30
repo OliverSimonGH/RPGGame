@@ -1,9 +1,8 @@
 package com.oliver.main.Map;
 
-import com.oliver.main.Character.Enemy.Enemy;
-import com.oliver.main.Character.Npc.Npc;
+import com.oliver.main.Character.Enemys.Enemy;
+import com.oliver.main.Character.Npcs.Npc;
 import com.oliver.main.Items.Food.Food;
-import com.oliver.main.Items.Item;
 import com.oliver.main.Items.Tradeable.Tradeable;
 import com.oliver.main.Items.Weapons.Weapon;
 

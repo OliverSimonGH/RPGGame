@@ -1,9 +1,5 @@
 package com.oliver.main.Character;
 
-import com.oliver.main.Potion.Potion;
-
-import java.util.Vector;
-
 /**
  * Created by c1633899 on 21/02/2017.
  */

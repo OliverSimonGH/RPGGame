@@ -1,4 +1,4 @@
-package com.oliver.main.Character.Npc;
+package com.oliver.main.Character.Npcs;
 
 import com.oliver.main.Items.Armour.Armour;
 import com.oliver.main.Items.Item;

@@ -1,4 +1,4 @@
-package com.oliver.main.Character.Enemy;
+package com.oliver.main.Character.Enemys;
 
 import com.oliver.main.Character.Person;
 import com.oliver.main.Character.PersonID;

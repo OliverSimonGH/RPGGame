@@ -1,11 +1,11 @@
 package com.oliver.main.Game;
 
-import com.oliver.main.Character.Enemy.Enemy;
-import com.oliver.main.Character.Npc.Npc;
-import com.oliver.main.Character.Player.PlayerEquipment;
+import com.oliver.main.Character.Enemys.Enemy;
+import com.oliver.main.Character.Npcs.Npc;
+import com.oliver.main.Character.Players.PlayerEquipment;
 import com.oliver.main.Character.PersonID;
-import com.oliver.main.Character.Player.Inventory;
-import com.oliver.main.Character.Player.Player;
+import com.oliver.main.Character.Players.Inventory;
+import com.oliver.main.Character.Players.Player;
 import com.oliver.main.Items.Armour.Armour;
 import com.oliver.main.Items.Armour.ArmourID;
 import com.oliver.main.Items.Food.Food;

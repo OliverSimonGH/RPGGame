@@ -1,4 +1,4 @@
-package com.oliver.main.Character.Player;
+package com.oliver.main.Character.Players;
 
 import com.oliver.main.Character.Person;
 import com.oliver.main.Character.PersonID;
