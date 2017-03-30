@@ -1,4 +1,7 @@
-package com.oliver.main.Character;
+package com.oliver.main.Character.Enemy;
+
+import com.oliver.main.Character.Person;
+import com.oliver.main.Character.PersonID;
 
 import java.util.Random;
 
